@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +12,22 @@ import { Loader2, Mail, Chrome } from "lucide-react";
 export default function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    // Clear error when component mounts and check for error in URL
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlError = urlParams.get('error');
+        
+        if (urlError) {
+            setError(urlError === 'session_error' 
+                ? 'Failed to complete sign in. Please try again.' 
+                : 'Authentication failed. Please try again.');
+            // Remove error from URL
+            window.history.replaceState({}, '', window.location.pathname);
+        } else {
+            setError(null);
+        }
+    }, []);
 
     const handleEmailAuth = async (e: React.FormEvent<HTMLFormElement>, isSignUp: boolean) => {
         e.preventDefault();
@@ -36,9 +52,19 @@ export default function LoginPage() {
 
     const handleGoogleAuth = async () => {
         setIsLoading(true);
+        setError(null);
         try {
             await signInWithGoogle();
-        } catch {
+            // If we reach here without redirect, something went wrong
+            setError("Failed to start Google sign in");
+            setIsLoading(false);
+        } catch (err) {
+            // Only show error if it's not a redirect (Next.js throws NEXT_REDIRECT)
+            if (err && typeof err === 'object' && 'digest' in err && 
+                typeof err.digest === 'string' && err.digest.includes('NEXT_REDIRECT')) {
+                // This is expected - redirect is happening
+                return;
+            }
             setError("Failed to start Google sign in");
             setIsLoading(false);
         }
