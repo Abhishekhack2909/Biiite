@@ -3,7 +3,7 @@ import { Header } from "@/components/layout/header";
 import { getCurrentUser } from "@/lib/actions/auth";
 import { redirect } from "next/navigation";
 
-export default async function MainLayout({
+export async function ProtectedLayout({
     children,
 }: {
     children: React.ReactNode;

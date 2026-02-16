@@ -2,6 +2,7 @@ import { getUserOrders } from "@/lib/actions/orders";
 import { OrderCard } from "@/components/orders/order-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Package } from "lucide-react";
+import { ProtectedLayout } from "@/components/layout/protected-layout";
 
 export default async function OrdersPage() {
     const orders = await getUserOrders();
@@ -14,15 +15,16 @@ export default async function OrdersPage() {
     );
 
     return (
-        <div>
-            <div className="mb-4">
-                <h1 className="text-xl font-bold">Your Orders</h1>
-                <p className="text-sm text-muted-foreground">
-                    Track and manage your deliveries
-                </p>
-            </div>
+        <ProtectedLayout>
+            <div>
+                <div className="mb-4">
+                    <h1 className="text-xl font-bold">Your Orders</h1>
+                    <p className="text-sm text-muted-foreground">
+                        Track and manage your deliveries
+                    </p>
+                </div>
 
-            {orders.length === 0 ? (
+                {orders.length === 0 ? (
                 <div className="text-center py-16">
                     <div className="mx-auto w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
                         <Package className="h-8 w-8 text-muted-foreground" />
@@ -67,7 +69,8 @@ export default async function OrdersPage() {
                         )}
                     </TabsContent>
                 </Tabs>
-            )}
-        </div>
+                )}
+            </div>
+        </ProtectedLayout>
     );
 }

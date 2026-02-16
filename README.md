@@ -19,6 +19,7 @@
 
 ## 📖 Table of Contents
 
+- [Documentation](#-documentation)
 - [Overview](#-overview)
 - [Architecture](#-architecture)
 - [Features](#-features)
@@ -29,6 +30,18 @@
 - [Deployment](#-deployment)
 - [Performance](#-performance)
 - [Contributing](#-contributing)
+
+---
+
+## 📚 Documentation
+
+**New to the project? Start here:**
+
+- **[STRUCTURE_VISUAL.md](./STRUCTURE_VISUAL.md)** - 🎨 Visual diagrams, flow charts, and quick reference
+- **[PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)** - 📁 Detailed folder structure and organization guide
+- **[README.md](./README.md)** - 📖 This file (overview, features, and setup)
+
+The project structure has been reorganized for clarity - no more confusing route groups or nested folders!
 
 ---
 
